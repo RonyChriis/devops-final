@@ -43,7 +43,7 @@ post {
         echo '¡Pipeline ejecutado con éxito!'
 
         // ⚡ MEJORA 3: Archivar el ZIP y el reporte de commits
-        archiveArtifacts artifacts: '*.zip, commits_for_report.txt', fingerprint: true
+       
 
         // ⚡ MEJORA 4: Generar el reporte de commits para tu presentación
         sh '''
@@ -54,6 +54,7 @@ post {
             echo "Últimos 10 commits en el repositorio:" >> commits_for_report.txt
             git log --oneline -10 --pretty=format:"%h | %an | %ar | %s" >> commits_for_report.txt
         '''
+         archiveArtifacts artifacts: '*.zip, commits_for_report.txt', fingerprint: true
     }
     failure {
         echo 'ERROR: El pipeline ha fallado. Revisa los logs para más detalles.'
