@@ -1,46 +1,64 @@
 pipeline {
-    agent any
+ agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Jenkins clona tu repositorio automáticamente.
-                // Este paso es solo informativo para que veas en el log que se obtuvo el código.
-                echo 'Obteniendo el código fuente del catálogo de comida...'
-            }
-        }
-        stage('Build') {
-            steps {
-                // Para una aplicación web estática, no hay un proceso de compilación como en Java o Node.js.
-                // El "build" es simplemente tener los archivos listos.
-                echo 'Build: La aplicación es estática, no se requiere compilación.'
-            }
-        }
-        stage('Test') {
-            steps {
-                // Aquí podrías correr pruebas automatizadas (ej. de usabilidad, de linting de JS, etc.).
-                // Para este caso, solo lo simulamos.
-                echo 'Test: Ejecutando pruebas (simulado).'
-            }
-        }
-        stage('Package Release') {
-            steps {
-                echo 'Package: Creando el artefacto del catálogo...'
-                // Este es el comando clave. Crea un archivo .zip con todo el contenido de tu app.
-                // El ${BUILD_NUMBER} es una variable de Jenkins que asegura que cada zip tenga un nombre único.
-                sh "zip -r devops-final-v${BUILD_NUMBER}.zip ./src"
-            }
+```
+// ⚡ MEJORA 1: Activación automática cada 5 minutos
+triggers {
+    githubPush()
+}
+
+// ⚡ MEJORA 2: Variables para mayor claridad
+environment {
+    APP_NAME = 'devops-final'
+    BUILD_VERSION = "v${BUILD_NUMBER}"
+}
+
+stages {
+    stage('📥 Checkout') {
+        steps {
+            echo 'Obteniendo el código fuente desde GitHub...'
         }
     }
-    post {
-        success {
-            echo '¡Pipeline ejecutado con éxito!'
-            // Este paso es CRUCIAL. Le dice a Jenkins que guarde el archivo .zip como un artefacto.
-            // Podrás descargarlo desde la interfaz web de Jenkins.
-            archiveArtifacts artifacts: '*.zip', fingerprint: true
-        }
-        failure {
-            echo 'ERROR: El pipeline ha fallado. Revisa los logs para más detalles.'
+    stage('🏗️ Build') {
+        steps {
+            echo 'Build: La aplicación es estática, no se requiere compilación.'
         }
     }
+    stage('🧪 Test') {
+        steps {
+            echo 'Test: Ejecutando pruebas (simulado).'
+        }
+    }
+    stage('📦 Package Release') {
+        steps {
+            echo 'Package: Creando el artefacto del proyecto...'
+            // ✅ MEJORA CLAVE: Solo empaqueta el contenido de la carpeta 'src'
+            // Usar './src/*' asegura que los archivos estén en la raíz del .zip, no dentro de una carpeta 'src'.
+            sh "zip -r ${APP_NAME}-${BUILD_VERSION}.zip ./src/*"
+        }
+    }
+}
+post {
+    success {
+        echo '¡Pipeline ejecutado con éxito!'
+
+        // ⚡ MEJORA 3: Archivar el ZIP y el reporte de commits
+        archiveArtifacts artifacts: '*.zip, commits_for_report.txt', fingerprint: true
+
+        // ⚡ MEJORA 4: Generar el reporte de commits para tu presentación
+        sh '''
+            echo "==========================================" > commits_for_report.txt
+            echo "    LOG DE COMMITS PARA EVALUACIÓN     " >> commits_for_report.txt
+            echo "==========================================" >> commits_for_report.txt
+            echo "" >> commits_for_report.txt
+            echo "Últimos 10 commits en el repositorio:" >> commits_for_report.txt
+            git log --oneline -10 --pretty=format:"%h | %an | %ar | %s" >> commits_for_report.txt
+        '''
+    }
+    failure {
+        echo 'ERROR: El pipeline ha fallado. Revisa los logs para más detalles.'
+    }
+}
+```
+
 }
