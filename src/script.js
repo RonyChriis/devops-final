@@ -6,7 +6,7 @@ const productos = [
         nombre: "Lomo Saltado",
         descripcion: "Tiernos trozos de lomo de res salteados con cebolla, tomate, ajo y huacatay. Servido con arroz y papas.",
         precio: 38.00,
-        imagen: "https://images.unsplash.com/photo-1565299624946-b28974268df0?w=400&h=300&fit=crop"
+        imagen: "https://origin.cronosmedia.glr.pe/large/2024/05/15/lg_664520c66ade8d4879400887.jpg"
     },
     {
         id: 3,
