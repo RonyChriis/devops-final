@@ -1,7 +1,7 @@
 pipeline {
  agent any
 
-```
+
 // 
 triggers {
     githubPush()
@@ -59,6 +59,5 @@ post {
         echo 'ERROR: El pipeline ha fallado. Revisa los logs para más detalles.'
     }
 }
-```
 
 }
