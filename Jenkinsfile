@@ -28,7 +28,7 @@ pipeline {
                 echo 'Package: Creando el artefacto del catálogo...'
                 // Este es el comando clave. Crea un archivo .zip con todo el contenido de tu app.
                 // El ${BUILD_NUMBER} es una variable de Jenkins que asegura que cada zip tenga un nombre único.
-                sh "zip -r devops-final-v${BUILD_NUMBER}.zip ./src*"
+                sh "zip -r devops-final-v${BUILD_NUMBER}.zip ./src"
             }
         }
     }
