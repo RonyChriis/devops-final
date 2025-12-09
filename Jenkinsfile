@@ -2,7 +2,7 @@ pipeline {
  agent any
 
 ```
-// ⚡ MEJORA 1: Activación automática cada 5 minutos
+// 
 triggers {
     githubPush()
 }
