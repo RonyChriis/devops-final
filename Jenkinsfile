@@ -57,7 +57,7 @@ post {
             echo "" >> commits_for_report.txt
             echo "📝 ÚLTIMOS 10 COMMITS EN EL REPOSITORIO:" >> commits_for_report.txt
             echo "--------------------------------------------------" >> commits_for_report.txt
-            git log --oneline -10 --pretty=format:"%h | %an | %ar | %s" >> commits_for_report.txt
+            git log --oneline -15 --pretty=format:"%h | %an | %ar | %s" >> commits_for_report.txt
         '''
 
 
