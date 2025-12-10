@@ -52,11 +52,11 @@ post {
             export LC_ALL=en_US.UTF-8
             
             echo "==================================================" > commits_for_report.txt
-            echo "  LOG DE COMMITS PARA EVALUACIÓN - BUILD #${BUILD_NUMBER}" >> commits_for_report.txt
-            echo "  Fecha de Generación: $(date '+%Y-%m-%d %H:%M:%S')" >> commits_for_report.txt
+            echo "  LOG DE COMMITS PARA EVALUACION - BUILD #${BUILD_NUMBER}" >> commits_for_report.txt
+            echo "  Fecha de Generacion: $(date '+%Y-%m-%d %H:%M:%S')" >> commits_for_report.txt
             echo "==================================================" >> commits_for_report.txt
             echo "" >> commits_for_report.txt
-            echo "📝 ÚLTIMOS 15 COMMITS EN EL REPOSITORIO:" >> commits_for_report.txt
+            echo "📝 ULTIMOS 15 COMMITS EN EL REPOSITORIO:" >> commits_for_report.txt
             echo "--------------------------------------------------" >> commits_for_report.txt
             git log --oneline -15 --pretty=format:"%h | %an | %ar | %s" >> commits_for_report.txt
         '''
