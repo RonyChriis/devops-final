@@ -47,15 +47,16 @@ post {
 
         // ⚡ MEJORA 4: Generar el reporte de commits para tu presentación
         sh '''
-           # Forzar la codificación de caracteres a UTF-8 para evitar problemas
-            export LANG=C.UTF-8
+            export LANG=en_US.UTF-8
+            export LANGUAGE=en_US.UTF-8
+            export LC_ALL=en_US.UTF-8
             
             echo "==================================================" > commits_for_report.txt
             echo "  LOG DE COMMITS PARA EVALUACIÓN - BUILD #${BUILD_NUMBER}" >> commits_for_report.txt
             echo "  Fecha de Generación: $(date '+%Y-%m-%d %H:%M:%S')" >> commits_for_report.txt
             echo "==================================================" >> commits_for_report.txt
             echo "" >> commits_for_report.txt
-            echo "📝 ÚLTIMOS 10 COMMITS EN EL REPOSITORIO:" >> commits_for_report.txt
+            echo "📝 ÚLTIMOS 15 COMMITS EN EL REPOSITORIO:" >> commits_for_report.txt
             echo "--------------------------------------------------" >> commits_for_report.txt
             git log --oneline -15 --pretty=format:"%h | %an | %ar | %s" >> commits_for_report.txt
         '''
